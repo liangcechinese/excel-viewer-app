@@ -2,19 +2,21 @@
  * 主应用组件
  */
 
-import React, { useState, useCallback } from 'react';
-import { Layout, Tabs, message } from 'antd';
+import React, { useState, useCallback, lazy, Suspense } from 'react';
+import { Layout, Tabs, message, Spin } from 'antd';
 import { FileUpload } from './components/common/FileUpload';
 import { Toolbar } from './components/common/Toolbar';
 import { ExcelViewer } from './components/ExcelViewer';
-import { CellDetailModal } from './components/CellDetail';
-import { DataAnalysis } from './components/DataAnalysis';
-import { ExportPanel } from './components/ExportPanel';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { FullScreenLoading } from './components/common/LoadingState';
 import { useExcelStore } from './stores/excelStore';
 import { CellData } from './types/excel';
 import { AnalysisResult } from './types/analysis';
+
+// 懒加载组件以减少初始bundle大小
+const CellDetailModal = lazy(() => import('./components/CellDetail'));
+const DataAnalysis = lazy(() => import('./components/DataAnalysis'));
+const ExportPanel = lazy(() => import('./components/ExportPanel'));
 
 const { Header, Content } = Layout;
 const { TabPane } = Tabs;
@@ -135,7 +137,14 @@ const App: React.FC = () => {
                   <ExcelViewer onCellClick={handleCellClick} />
                 </TabPane>
                 <TabPane tab="数据分析" key="analysis">
-                  <DataAnalysis onAnalyzeComplete={handleAnalyzeComplete} />
+                  <Suspense fallback={
+                    <div style={{ textAlign: 'center', padding: '40px 0' }}>
+                      <Spin size="large" />
+                      <div style={{ marginTop: 16 }}>正在加载数据分析模块...</div>
+                    </div>
+                  }>
+                    <DataAnalysis onAnalyzeComplete={handleAnalyzeComplete} />
+                  </Suspense>
                 </TabPane>
               </Tabs>
             </div>
@@ -143,17 +152,26 @@ const App: React.FC = () => {
         </Content>
 
         {/* 单元格详情弹窗 */}
-        <CellDetailModal
-          visible={showCellDetail}
-          cell={selectedCell}
-          onClose={handleCloseCellDetail}
-        />
+        <Suspense fallback={<div></div>}>
+          <CellDetailModal
+            visible={showCellDetail}
+            cell={selectedCell}
+            onClose={handleCloseCellDetail}
+          />
+        </Suspense>
 
         {/* 导出面板 */}
-        <ExportPanel
-          visible={showExportPanel}
-          onClose={handleCloseExportPanel}
-        />
+        <Suspense fallback={
+          <div style={{ textAlign: 'center', padding: '40px 0' }}>
+            <Spin size="large" />
+            <div style={{ marginTop: 16 }}>正在加载导出模块...</div>
+          </div>
+        }>
+          <ExportPanel
+            visible={showExportPanel}
+            onClose={handleCloseExportPanel}
+          />
+        </Suspense>
       </Layout>
     </ErrorBoundary>
   );

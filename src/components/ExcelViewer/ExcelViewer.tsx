@@ -2,13 +2,15 @@
  * Excel查看器主组件
  */
 
-import React, { useState, useCallback, useMemo } from 'react';
-import { Table, Card, Tabs, Pagination, Empty, Switch, Tooltip, Typography } from 'antd';
+import React, { useState, useCallback, useMemo, lazy, Suspense } from 'react';
+import { Table, Card, Tabs, Pagination, Empty, Switch, Tooltip, Typography, Spin } from 'antd';
 import { CellData } from '../../types/excel';
 import { useExcelStore } from '../../stores/excelStore';
-import { VirtualTable } from './VirtualTable';
 import { InlineLoading } from '../common/LoadingState';
 import { usePerformanceMonitor } from '../../hooks/usePerformanceMonitor';
+
+// 懒加载虚拟表格组件以减少初始bundle大小
+const VirtualTable = lazy(() => import('./VirtualTable'));
 
 const { Text } = Typography;
 
@@ -78,12 +80,19 @@ export const ExcelViewer: React.FC<ExcelViewerProps> = ({ onCellClick }) => {
           </div>
           
           <InlineLoading loading={isLoading} message="正在渲染数据...">
-            <VirtualTable
-              worksheet={currentWorksheet}
-              onCellClick={handleCellClick}
-              selectedCell={selectedCell}
-              height={500}
-            />
+            <Suspense fallback={
+              <div style={{ textAlign: 'center', padding: '40px 0' }}>
+                <Spin size="large" />
+                <div style={{ marginTop: 16 }}>正在加载虚拟表格组件...</div>
+              </div>
+            }>
+              <VirtualTable
+                worksheet={currentWorksheet}
+                onCellClick={handleCellClick}
+                selectedCell={selectedCell}
+                height={500}
+              />
+            </Suspense>
           </InlineLoading>
         </div>
       );
