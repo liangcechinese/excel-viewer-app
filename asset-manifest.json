@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/excel-viewer-app/static/css/main.b81afd23.css",
+    "main.js": "/excel-viewer-app/static/js/main.9ed20b8c.js",
+    "static/js/498.800374ce.chunk.js": "/excel-viewer-app/static/js/498.800374ce.chunk.js",
+    "static/js/57.47322ed5.chunk.js": "/excel-viewer-app/static/js/57.47322ed5.chunk.js",
+    "static/js/703.6e21d55d.chunk.js": "/excel-viewer-app/static/js/703.6e21d55d.chunk.js",
+    "static/js/875.978d732c.chunk.js": "/excel-viewer-app/static/js/875.978d732c.chunk.js",
+    "static/js/504.ccdb4ced.chunk.js": "/excel-viewer-app/static/js/504.ccdb4ced.chunk.js",
+    "static/js/118.ad8c080d.chunk.js": "/excel-viewer-app/static/js/118.ad8c080d.chunk.js",
+    "static/js/514.fb1fd2be.chunk.js": "/excel-viewer-app/static/js/514.fb1fd2be.chunk.js",
+    "index.html": "/excel-viewer-app/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.b81afd23.css",
+    "static/js/main.9ed20b8c.js"
+  ]
+}
