@@ -38,7 +38,9 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "deploy:netlify": "netlify deploy --prod --dir=build",
-    "deploy:vercel": "vercel --prod"
+    "deploy:vercel": "vercel --prod",
+    "deploy:gitee": "npm run build && echo '请将build目录内容上传到Gitee Pages'",
+    "deploy:codng": "npm run build && echo '请将build目录内容上传到Coding静态网站托管'"
   },
   "eslintConfig": {
     "extends": [
