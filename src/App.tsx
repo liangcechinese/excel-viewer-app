@@ -14,9 +14,9 @@ import { CellData } from './types/excel';
 import { AnalysisResult } from './types/analysis';
 
 // 懒加载组件以减少初始bundle大小
-const CellDetailModal = lazy(() => import('./components/CellDetail'));
-const DataAnalysis = lazy(() => import('./components/DataAnalysis'));
-const ExportPanel = lazy(() => import('./components/ExportPanel'));
+const CellDetailModal = lazy(() => import('./components/CellDetail/CellDetailModal').then(module => ({ default: module.CellDetailModal })));
+const DataAnalysis = lazy(() => import('./components/DataAnalysis/DataAnalysis').then(module => ({ default: module.DataAnalysis })));
+const ExportPanel = lazy(() => import('./components/ExportPanel/ExportPanel').then(module => ({ default: module.ExportPanel })));
 
 const { Header, Content } = Layout;
 const { TabPane } = Tabs;

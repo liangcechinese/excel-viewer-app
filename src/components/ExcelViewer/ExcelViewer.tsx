@@ -10,7 +10,7 @@ import { InlineLoading } from '../common/LoadingState';
 import { usePerformanceMonitor } from '../../hooks/usePerformanceMonitor';
 
 // 懒加载虚拟表格组件以减少初始bundle大小
-const VirtualTable = lazy(() => import('./VirtualTable'));
+const VirtualTable = lazy(() => import('./VirtualTable').then(module => ({ default: module.VirtualTable })));
 
 const { Text } = Typography;
 
