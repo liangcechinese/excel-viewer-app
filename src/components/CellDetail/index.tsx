@@ -1,0 +1,1 @@
+export { CellDetailModal } from './CellDetailModal';
